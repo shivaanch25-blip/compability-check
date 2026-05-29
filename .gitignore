@@ -1,0 +1,25 @@
+# Python virtual environment
+backend/venv/
+venv/
+*.pyc
+__pycache__/
+
+# Node dependencies
+frontend/node_modules/
+node_modules/
+frontend/dist/
+dist/
+
+# Local databases and caches
+*.db
+backend/videos.db
+videos.db
+
+# Environmental variables
+.env
+backend/.env
+frontend/.env.local
+
+# Operating system files
+.DS_Store
+Thumbs.db

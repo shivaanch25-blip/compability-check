@@ -1,0 +1,13 @@
+fastapi>=0.100.0
+uvicorn[standard]>=0.20.0
+yt-dlp>=2023.7.6
+youtube-transcript-api>=0.6.1
+openai>=1.0.0
+numpy>=1.24.0
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+langchain>=0.1.0
+langchain-community>=0.0.10
+langchain-openai>=0.0.2
+sse-starlette>=1.6.0
+python-multipart>=0.0.6
