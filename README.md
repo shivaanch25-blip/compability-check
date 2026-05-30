@@ -83,6 +83,11 @@ When scaling from 1,000 to 10,000+ users/day, the following bottlenecks arise:
 3. **Database Contention**: Under 10k users, SQLite write-locks can trigger `DatabaseIsLocked` errors.
    - _Mitigation_: Upgrade the caching database to a managed **PostgreSQL** instance with connection pooling enabled.
 
+### 5. Cross-Origin Production Routing & API Version Resilience
+
+- **Vercel Rewrite Routing**: In local development, the Vite dev server proxy routes `/api` calls. In production on Vercel, this is handled via `vercel.json` rewrites that dynamically proxy all backend traffic to the Render URL, completely avoiding cross-origin (CORS) preflight blockages and hardcoded config URLs.
+- **YouTube API Adaptation**: The extraction engine is resilient against breaking changes introduced in `youtube-transcript-api` (version 1.x vs 0.x), with fallback code paths that handle the removal of static class functions and convert structured dataclasses to standard dictionary representations dynamically.
+
 ---
 
 ## 🛠️ Step-by-Step Installation & Run

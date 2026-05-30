@@ -102,17 +102,34 @@ def get_yt_metadata_and_transcript(url: str) -> Dict[str, Any]:
     logger.info(f"Extracting YouTube transcript for ID: {video_id}")
     try:
         if video_id:
-            transcript_list = YouTubeTranscriptApi.get_transcript(video_id)
-            # Standardize transcripts into a formatted string and structured payload
-            formatted_lines = []
-            for item in transcript_list:
-                start = item['start']
-                text = item['text']
-                # Create timestamp like [01:23]
-                minutes = int(start // 60)
-                seconds = int(start % 60)
-                timestamp = f"[{minutes:02d}:{seconds:02d}]"
-                formatted_lines.append(f"{timestamp} {text}")
+            try:
+                # Try 1.x API
+                api = YouTubeTranscriptApi()
+                transcript_list = api.fetch(video_id)
+                formatted_lines = []
+                for item in transcript_list:
+                    start = getattr(item, 'start', None)
+                    if start is None and isinstance(item, dict):
+                        start = item.get('start', 0.0)
+                    text = getattr(item, 'text', None)
+                    if text is None and isinstance(item, dict):
+                        text = item.get('text', '')
+                    
+                    minutes = int(start // 60)
+                    seconds = int(start % 60)
+                    timestamp = f"[{minutes:02d}:{seconds:02d}]"
+                    formatted_lines.append(f"{timestamp} {text}")
+            except AttributeError:
+                # Fallback to pre-1.0.0 API
+                transcript_list = YouTubeTranscriptApi.get_transcript(video_id)
+                formatted_lines = []
+                for item in transcript_list:
+                    start = item['start']
+                    text = item['text']
+                    minutes = int(start // 60)
+                    seconds = int(start % 60)
+                    timestamp = f"[{minutes:02d}:{seconds:02d}]"
+                    formatted_lines.append(f"{timestamp} {text}")
             
             transcript_text = "\n".join(formatted_lines)
             logger.info("Successfully fetched YouTube transcript.")
