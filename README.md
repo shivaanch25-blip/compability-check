@@ -12,7 +12,7 @@ A production-grade, highly resource-efficient full-stack RAG (Retrieval-Augmente
 > - **Live Frontend Dashboard (Vercel)**: `(https://compability-check.vercel.app/)`
 > - **Live Backend API Service (Render)**: `
 
-## `https://compability-check.onrender.com`
+## `(https://compability-check.onrender.com)`
 
 ## 🎯 Key Capabilities
 
